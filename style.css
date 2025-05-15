@@ -1,0 +1,28 @@
+
+
+/*** VARIABLES   ***/
+:root{
+    --primary: #ffffff;
+    --green1:#06fb06;
+
+}
+
+/*** GENERAL ***/
+body{
+    background-color: #000000;
+}
+
+.container{
+
+
+}
+
+/**ELEMENTS**/
+#snake{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 20px;
+    width: 20px;
+    background-color: var(--green1);
+}
