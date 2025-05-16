@@ -58,6 +58,12 @@ function snakeEvent(keydown) {
 
 
 //POSITIONS DES ELEMENTS en continu 
+
+function AppleMove(){
+        apple.style.top = Math.floor(Math.random() * 100);
+        apple.style.left = Math.floor(Math.random() * 100);
+        
+}
 let intervalPositions =  setInterval(() => 
         Positions(), 100);
 function Positions () {
@@ -66,19 +72,18 @@ function Positions () {
         let applePositionDatas = apple.getBoundingClientRect();
         console.log(applePositionDatas);
         let gameLimits = container.getBoundingClientRect();
-        console.log(gameLimits);
 
         //POMME MANGEE avec tolérance +- 10px
         if(Math.abs(snakePositionDatas.x - applePositionDatas.x)<=10 && 
         Math.abs(snakePositionDatas.y - applePositionDatas.y)<=10){
-                alert('TEST POMME MANGEE')
+                alert('TEST POMME MANGEE');
+        //Fonction changement position pomme.
+        AppleMove();
         }
 }
 //Gestion sortie écran
         //  POSITION SNAKE
         //  POISTION CONTAINER
-
-        
         // console.log (getBoundingClientRect())
 
 
