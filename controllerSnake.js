@@ -1,13 +1,13 @@
 
-let snake = document.getElementById('snake');
+let snake = document.getElementById('snake-head');
 let apple= document.getElementById('apple');
 let container = document.getElementById('container-jeu');
 
-let positionSnakeX = 100;
-let positionSnakeY = 100;
+let positionSnakeX = 300;
+let positionSnakeY = 200;
 
 
-//Fonctions de mouvement
+//FONCTIONS MOUVEMENT SNAKE
 function moveSnakeDown () {
         positionSnakeY += 10;
         snake.style.top= positionSnakeY + 'px';
@@ -26,16 +26,20 @@ function moveSnakeLeft () {
 }
 
 
-//Gestionnaires d'evenements 
-     //Listener pour touches
+
+//GESTION D'EVENEMENTS
+
+     //Listener pour touches + renvoi des positions
 let lastkeyDownSave = '';
+let interval =  setInterval(() => 
+        snakeEvent(lastkeyDownSave), 100);
+
 document.addEventListener('keydown', function(event){
-      lastkeyDownSave = event.key;
-      setInterval(() => snakeEvent(lastkeyDownSave), 150);
-      // CLEAR ???
+        lastkeyDownSave = event.key;
+        interval;
 });
 
-    //Fonction reaction gestion de l'evenement
+    //Fonction reaction gestion evenement
 function snakeEvent(keydown) {
         if(keydown === 'ArrowRight'){
                 moveSnakeRight();
@@ -52,31 +56,31 @@ function snakeEvent(keydown) {
 }
 
 
-//POSITIONS DES ELEMENTS
-let applePositionData= apple.getBoundingClientRect();
-console.log(applePositionData);
-let jeuLimits = container.getBoundingClientRect();
-console.log(jeuLimits);
 
+//POSITIONS DES ELEMENTS en continu 
+let intervalPositions =  setInterval(() => 
+        Positions(), 100);
+function Positions () {
+        let snakePositionDatas = snake.getBoundingClientRect()
+        console.log(snakePositionDatas);
+        let applePositionDatas = apple.getBoundingClientRect();
+        console.log(applePositionDatas);
+        let gameLimits = container.getBoundingClientRect();
+        console.log(gameLimits);
 
-
-
-
-
+        //POMME MANGEE avec tolérance +- 10px
+        if(Math.abs(snakePositionDatas.x - applePositionDatas.x)<=10 && 
+        Math.abs(snakePositionDatas.y - applePositionDatas.y)<=10){
+                alert('TEST POMME MANGEE')
+        }
+}
 //Gestion sortie écran
-        //POSITIONS LIMITES
-        //Récupération positions container 
-        // 
-        // console.log(jeuLimits);
         //  POSITION SNAKE
-        // let snakeposition = document.getElementById(' ')
+        //  POISTION CONTAINER
 
         
         // console.log (getBoundingClientRect())
 
-
-
-        //condition position
 
 
 
