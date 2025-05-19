@@ -3,26 +3,46 @@ let snake = document.getElementById('snake-head');
 let apple= document.getElementById('apple');
 let container = document.getElementById('container-jeu');
 
-let positionSnakeX = 300;
+let positionSnakeX =  300;
 let positionSnakeY = 200;
 
 
 //FONCTIONS MOUVEMENT SNAKE
 function moveSnakeDown () {
         positionSnakeY += 10;
-        snake.style.top= positionSnakeY + 'px';
+        if(positionSnakeY >= 590){
+                positionSnakeY = 10;
+                snake.style.top= positionSnakeY + 'px';
+        } else {
+                snake.style.top= positionSnakeY + 'px';
+        }
 }
 function moveSnakeUp () {
         positionSnakeY -= 10;
-        snake.style.top= positionSnakeY + 'px';
+        if(positionSnakeY <= 4){
+                positionSnakeY = 599;
+                snake.style.top= positionSnakeY + 'px';
+        } else {
+                snake.style.top= positionSnakeY + 'px';
+        }
 }
 function moveSnakeRight () {
         positionSnakeX += 10;
-        snake.style.left= positionSnakeX + 'px';
+        if(positionSnakeX >= 600){
+                positionSnakeX = 0;
+                snake.style.left= positionSnakeX + 'px';
+        } else {
+                snake.style.left= positionSnakeX + 'px';
+        }
 }
 function moveSnakeLeft () {
         positionSnakeX -= 10;
-        snake.style.left= positionSnakeX + 'px';
+        if(positionSnakeX <= 5){
+                positionSnakeX = 599;
+                snake.style.left= positionSnakeX + 'px';
+        } else {
+                snake.style.left= positionSnakeX + 'px';
+        }
 }
 
 
@@ -56,13 +76,12 @@ function snakeEvent(keydown) {
 }
 
 
-
+let score = 0;
 //POSITIONS DES ELEMENTS en continu 
 
 function AppleMove(){
         apple.style.top = Math.floor(Math.random() * 100);
-        apple.style.left = Math.floor(Math.random() * 100);
-        
+        apple.style.left = Math.floor(Math.random() * 100);    
 }
 let intervalPositions =  setInterval(() => 
         Positions(), 100);
@@ -72,14 +91,24 @@ function Positions () {
         let applePositionDatas = apple.getBoundingClientRect();
         console.log(applePositionDatas);
         let gameLimits = container.getBoundingClientRect();
-
+        
         //POMME MANGEE avec tolérance +- 10px
         if(Math.abs(snakePositionDatas.x - applePositionDatas.x)<=10 && 
         Math.abs(snakePositionDatas.y - applePositionDatas.y)<=10){
-                alert('TEST POMME MANGEE');
+                addSnakeSize();
+                score ++;
+                alert('SCORE' + '   ' + score );  
         //Fonction changement position pomme.
         AppleMove();
         }
+}
+
+//TAILLE SNAKE
+function addSnakeSize () {
+        let snakeSize = document.createElement('div');
+        snakeSize.className = ' snakeSize ';
+        snakeSize.style.top =  + 'px';
+        snakeSize.style.left = + 'px';
 }
 //Gestion sortie écran
         //  POSITION SNAKE
