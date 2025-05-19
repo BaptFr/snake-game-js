@@ -5,11 +5,14 @@ let container = document.getElementById('container-jeu');
 let scoreDisplay = document.getElementById('score-display');
 let positionSnakeX = 300;
 let positionSnakeY = 200;
-let snakeSizePosition = [];
+let lastPositions = [];
+let addSnakePart =  [];
+
 
 
 //FONCTIONS MOUVEMENT SNAKE
 function moveSnakeDown() {
+        lastPositions.unshift({ x: positionSnakeX, y: positionSnakeY });
         positionSnakeY += 10;
         if (positionSnakeY >= 590) {
                 positionSnakeY = 10;
@@ -17,8 +20,10 @@ function moveSnakeDown() {
         } else {
                 snake.style.top = positionSnakeY + 'px';
         }
+        updateSnakeBody();
 }
 function moveSnakeUp() {
+        lastPositions.unshift({ x: positionSnakeX, y: positionSnakeY });
         positionSnakeY -= 10;
         if (positionSnakeY <= 4) {
                 positionSnakeY = 599;
@@ -26,8 +31,10 @@ function moveSnakeUp() {
         } else {
                 snake.style.top = positionSnakeY + 'px';
         }
+        updateSnakeBody();
 }
 function moveSnakeRight() {
+        lastPositions.unshift({ x: positionSnakeX, y: positionSnakeY });
         positionSnakeX += 10;
         if (positionSnakeX >= 590) {
                 positionSnakeX = 0;
@@ -35,8 +42,10 @@ function moveSnakeRight() {
         } else {
                 snake.style.left = positionSnakeX + 'px';
         }
+        updateSnakeBody();
 }
 function moveSnakeLeft() {
+        lastPositions.unshift({ x: positionSnakeX, y: positionSnakeY });
         positionSnakeX -= 10;
         if (positionSnakeX <= 5) {
                 positionSnakeX = 599;
@@ -44,6 +53,7 @@ function moveSnakeLeft() {
         } else {
                 snake.style.left = positionSnakeX + 'px';
         }
+        updateSnakeBody();
 }
 
 
@@ -84,7 +94,7 @@ function AppleMove() {
 }
 
 
-//POSITIONS DES ELEMENTS en continu 
+//POSITIONS DES ELEMENTS en continu
 let intervalPositions = setInterval(() =>
         Positions(), 100);
 function Positions() {
@@ -100,33 +110,38 @@ function Positions() {
                 Math.abs(snakePositionDatas.y - applePositionDatas.y) <= 15) {
                 AppleMove();
                 score++;
-                alert('SCORE:  ' + score);
-                scoreDisplay.innerHTML = 'SCORE: ' + score; // REVOIR 
+                scoreDisplay.innerHTML = 'SCORE: ' + score;
 
-                //Tableau coordonnées
-                let snakeSizePositionDats = [];
+                addSnakeSize();
 
-                //Coordonnées dernier élement du tableau 
-
-                //FONCTION AJOUT SNAKE
-                addSnakeSize(snakePositionDatas);
-                //Ajout au tableau des coordonnées du snakeSize au dernier index
         }
 }
 
 
 //AJOUT SNAKE
-function addSnakeSize(snakePositionDatas) {
-        //test positions 
-        let positionElementX = 0;
-        let positionElementY = 0;
-
-        //Snake grossit
+function addSnakeSize() {
+        //Snake grossit ajout
         let snakeSize = document.createElement('div');
         snakeSize.className = 'snake-size';
-        snakeSize.style.top = (snakePositionDatas.X + 20) + 'px';
-        snakeSize.style.left = snakePositionDatas.Y + 'px';
+        if (lastPositions[1]){
+                snakeSize.style.top = lastPositions[1].y + 'px';
+                snakeSize.style.left = lastPositions[1].x + 'px';
+        } else {
+                snakeSize.style.top = positionSnakeX + 'px';
+                snakeSize.style.left = positionSnakeY + 'px';
+        }
+
         container.appendChild(snakeSize);
-        // snakeSize.style.top = snakePositionDatas.Y + 'px';
-        // snakeSize.style.left = snakePositionDatas.X + 'px';
+        //Ajout  au tableau snakePart: Uniquement partie suppl
+        addSnakePart.push(snakeSize);
+
+}
+
+function updateSnakeBody() {
+        for (let i = 0; i < addSnakePart.length; i++) {
+                if (lastPositions[i + 1]) {
+                addSnakePart[i].style.left = lastPositions[i + 1].x + 'px';
+                addSnakePart[i].style.top = lastPositions[i + 1].y + 'px';
+                }
+        }
 }
