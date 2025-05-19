@@ -2,6 +2,7 @@
 let snake = document.getElementById('snake-head');
 let apple= document.getElementById('apple');
 let container = document.getElementById('container-jeu');
+let scoreDisplay = document.getElementById('score-display');
 
 let positionSnakeX =  300;
 let positionSnakeY = 200;
@@ -28,7 +29,7 @@ function moveSnakeUp () {
 }
 function moveSnakeRight () {
         positionSnakeX += 10;
-        if(positionSnakeX >= 600){
+        if(positionSnakeX >= 590){
                 positionSnakeX = 0;
                 snake.style.left= positionSnakeX + 'px';
         } else {
@@ -77,12 +78,14 @@ function snakeEvent(keydown) {
 
 
 let score = 0;
-//POSITIONS DES ELEMENTS en continu 
-
+//CHANGEMENT POSITION APPLE
 function AppleMove(){
-        apple.style.top = Math.floor(Math.random() * 100);
-        apple.style.left = Math.floor(Math.random() * 100);    
+        apple.style.top = Math.floor(Math.random() * 50);
+        apple.style.left = Math.floor(Math.random() * 50);    
 }
+
+
+//POSITIONS DES ELEMENTS en continu 
 let intervalPositions =  setInterval(() => 
         Positions(), 100);
 function Positions () {
@@ -91,29 +94,35 @@ function Positions () {
         let applePositionDatas = apple.getBoundingClientRect();
         console.log(applePositionDatas);
         let gameLimits = container.getBoundingClientRect();
-        
         //POMME MANGEE avec tolérance +- 10px
-        if(Math.abs(snakePositionDatas.x - applePositionDatas.x)<=10 && 
-        Math.abs(snakePositionDatas.y - applePositionDatas.y)<=10){
-                addSnakeSize();
+        if(Math.abs(snakePositionDatas.x - applePositionDatas.x)<=16 && 
+        Math.abs(snakePositionDatas.y - applePositionDatas.y)<=16){
+                AppleMove();
                 score ++;
-                alert('SCORE' + '   ' + score );  
-        //Fonction changement position pomme.
-        AppleMove();
+                alert('SCORE:  ' + score );
+                scoreDisplay.innerHTML= 'SCORE: ' + score; // REVOIR 
+                addSnakeSize(snakePositionDatas);
+                //pomme mangée
+                //position snake à ce moment
+                        //Ajouter dans un tableau
+                        //Mais ajouter les nombre selon le nombre de parties
+                        //utiliser position snake pour ajouter morceau
+                        //(boucle)
+                //appeler fonc qui ajoute
         }
 }
 
+
 //TAILLE SNAKE
-function addSnakeSize () {
+function addSnakeSize(snakePosition) {
         let snakeSize = document.createElement('div');
-        snakeSize.className = ' snakeSize ';
-        snakeSize.style.top =  + 'px';
-        snakeSize.style.left = + 'px';
+        snakeSize.className = 'snake-size';
+        snakeSize.style.top = snakePosition.y + 'px';
+        snakeSize.style.left = snakePosition.x + 'px';
+        container.appendChild(snakeSize);
 }
-//Gestion sortie écran
-        //  POSITION SNAKE
-        //  POISTION CONTAINER
-        // console.log (getBoundingClientRect())
+
+
 
 
 
