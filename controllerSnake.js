@@ -12,7 +12,6 @@ let addSnakePart =  [];
 
 //FONCTIONS MOUVEMENT SNAKE
 function moveSnakeDown() {
-        lastPositions.unshift({ x: positionSnakeX, y: positionSnakeY });
         positionSnakeY += 10;
         if (positionSnakeY >= 590) {
                 positionSnakeY = 10;
@@ -23,7 +22,6 @@ function moveSnakeDown() {
         updateSnakeBody();
 }
 function moveSnakeUp() {
-        lastPositions.unshift({ x: positionSnakeX, y: positionSnakeY });
         positionSnakeY -= 10;
         if (positionSnakeY <= 4) {
                 positionSnakeY = 599;
@@ -34,9 +32,8 @@ function moveSnakeUp() {
         updateSnakeBody();
 }
 function moveSnakeRight() {
-        lastPositions.unshift({ x: positionSnakeX, y: positionSnakeY });
         positionSnakeX += 10;
-        if (positionSnakeX >= 590) {
+        if (positionSnakeX >= 585) {
                 positionSnakeX = 0;
                 snake.style.left = positionSnakeX + 'px';
         } else {
@@ -45,7 +42,6 @@ function moveSnakeRight() {
         updateSnakeBody();
 }
 function moveSnakeLeft() {
-        lastPositions.unshift({ x: positionSnakeX, y: positionSnakeY });
         positionSnakeX -= 10;
         if (positionSnakeX <= 5) {
                 positionSnakeX = 599;
@@ -55,7 +51,6 @@ function moveSnakeLeft() {
         }
         updateSnakeBody();
 }
-
 
 
 //GESTION D'EVENEMENTS
@@ -102,16 +97,13 @@ function Positions() {
         //console.log(snakePositionDatas);
         let applePositionDatas = apple.getBoundingClientRect();
         //console.log(applePositionDatas);
-        let snakeValorsArray = [snakePositionDatas.x, snakePositionDatas.y];
-        //console.log(snakeValorsArray);
 
-        //POMME MANGEE avec tolérance +- 10px
+        //POMME MANGEE avec tolérance +- 15px
         if (Math.abs(snakePositionDatas.x - applePositionDatas.x) <= 16 &&
                 Math.abs(snakePositionDatas.y - applePositionDatas.y) <= 15) {
                 AppleMove();
                 score++;
-                scoreDisplay.innerHTML = 'SCORE: ' + score;
-
+                scoreDisplay.innerHTML = 'SCORE: ' + score
                 addSnakeSize();
 
         }
@@ -134,10 +126,10 @@ function addSnakeSize() {
         container.appendChild(snakeSize);
         //Ajout  au tableau snakePart: Uniquement partie suppl
         addSnakePart.push(snakeSize);
-
 }
 
 function updateSnakeBody() {
+        lastPositions.unshift({ x: positionSnakeX, y: positionSnakeY });
         for (let i = 0; i < addSnakePart.length; i++) {
                 if (lastPositions[i + 1]) {
                 addSnakePart[i].style.left = lastPositions[i + 1].x + 'px';
