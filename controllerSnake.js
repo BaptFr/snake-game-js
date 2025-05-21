@@ -84,8 +84,8 @@ function snakeEvent(keydown) {
 let score = 0;
 //CHANGEMENT POSITION APPLE
 function AppleMove() {
-        apple.style.top = Math.floor(Math.random() * 100);
-        apple.style.left = Math.floor(Math.random() * 100);
+        apple.style.top = Math.floor(Math.random() * 300);
+        apple.style.left = Math.floor(Math.random() * 300);
 }
 
 
